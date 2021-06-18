@@ -63,3 +63,27 @@ docker run hello-world
 ```
 
 ![image-20210616111258977](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210616111258977.png)
+
+
+
+# 查看镜像
+
+```
+docker images
+```
+
+
+
+# 卸载docker
+
+```
+yum remove docker-ce docker-ce-cli containerd.io
+
+删除 资源
+rm -rf /var/lib/docker
+
+rm -rf /var/lib/containerd
+```
+
+
+
