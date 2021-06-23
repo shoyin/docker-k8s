@@ -1,8 +1,8 @@
 # Docker
 
-https://docs.docker.com/
+DockerHub:	https://hub.docker.com/
 
-
+帮助文档地址：https://docs.docker.com/
 
 # 卸载旧版本
 
@@ -145,6 +145,10 @@ sudo systemctl restart docker
 
 
 
+***
+
+
+
 # 底层原理
 
 ### Docker 是怎么工作的？
@@ -173,6 +177,10 @@ Docker不需要像虚拟机一样重新加载一个操作系统的内核，避�
 
 
 
+***
+
+
+
 # Docker 常用命令
 
 
@@ -186,6 +194,10 @@ docker 命令 --help	#帮助命令
 ```
 
 帮助文档地址：https://docs.docker.com/reference/
+
+***
+
+
 
 ## 镜像命令
 
@@ -294,7 +306,7 @@ docker rmi -f $(docker images -aq)  #删除全部容器
 
 
 
-**docker rmi -f  dockerId**
+**docker rmi -f  imageId**
 
 ```shell
 [root@hoyin ~]# docker rmi -f 2c9028880e58
@@ -330,6 +342,10 @@ Untagged: hello-world:latest
 Untagged: hello-world@sha256:9f6ad537c5132bcce57f7a0a20e317228d382c3cd61edae14650eec68b2b345c
 Deleted: sha256:d1165f2212346b2bab48cb01c1e39ee8ad1be46b87873d9ca7a4e434980a7726
 ```
+
+
+
+***
 
 
 
@@ -454,6 +470,10 @@ docker stop 容器Id		#停止当前正在运行的容器
 
 docker kill	容器Id		#强制停止
 ```
+
+
+
+***
 
 
 
@@ -780,6 +800,10 @@ test.js
 
 
 
+***
+
+
+
 # Docker 安装 Nginx
 
 docker search nginx
@@ -883,6 +907,10 @@ Commercial support is available at
 
 
 
+***
+
+
+
 # Docker status
 
 ```shell
@@ -898,6 +926,10 @@ docker run -d --name elasticsearch02 -p 9200:9200 -p 9300:9300 -e "discovery.typ
 ```
 
 ![image-20210622142340309](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210622142340309.png)
+
+
+
+***
 
 
 
@@ -927,6 +959,10 @@ http://ip:8088
 ![image-20210622153312227](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210622153312227.png)
 
 ![image-20210622153057205](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210622153057205.png)
+
+
+
+***
 
 
 
@@ -973,6 +1009,10 @@ Error response from daemon: No such container: centos10
 
 
 
+***
+
+
+
 # Docker 数据卷
 
 容器的持久化和同步操作
@@ -994,6 +1034,10 @@ docker inspect 容器id
 ```
 
 ![image-20210622162856592](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210622162856592.png)
+
+
+
+***
 
 
 
@@ -1033,6 +1077,10 @@ docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/
 [root@hoyin test]# docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e  MYSQL_ROOT_PASSWORD=123456 --name mysql01 mysql:5.7
 2f011b57949081bd0d8e00d2db2222aa2992800e9ac7020d46edf49a2a2f767a
 ```
+
+
+
+***
 
 
 
@@ -1105,6 +1153,10 @@ local     ju-nginx #新增卷
 
 
 
+
+
+
+
 ### docker volume目录
 
 所有的docker容器内的卷，没有指定情况下都是在
@@ -1132,19 +1184,49 @@ rw		readwrite
 
 
 
+
+
+### Docker 已有容器挂载新目录
+
+1. 关闭正在运行Docker容器
+
+2. docker stop container-Id
+
+3. 关闭Docker.service 
+
+4. systemctl stop docker
+
+5. 修改容器config
+
+6. ```shell
+   vim /var/lib/docker/containers/container-ID/config.v2.json
+   #修改 MountPoints
+   "MountPoints":{"/ect/nginx":{"Source":"/home/nginx","Destination":"/ect/nginx","RW":true,"Name":"","Driver":"","Type":"bind","Propagation":"rprivate","Spec":{"Type":"bind","Source":"/home/nginx","Target":"/ect/nginx"},"SkipMountpointCreation":false}}
+   
+   "MountPoints":{"/容器挂载目录":{"Source":"/宿主机挂载目录","Destination":"/容器挂载目录","RW":true,"Name":"","Driver":"","Type":"bind","Propagation":"rprivate","Spec":{"Type":"bind","Source":"/宿主机挂载目录","Target":"/容器挂载目录"},"SkipMountpointCreation":false}}
+   ```
+
+7. 保存重启 docker.service
+
+8. systemctl start docker
+
+9. 重启容器
+
+10. docker start container-Id
+
+
+
 # Dockerfile
 
 ### docker build
 
-### **#编写Dockerfile脚本**
+### **#编辑Dockerfile**
 
 ```shell
 [root@hoyin docker-test-volumes]# vim dockerfile
 ```
 
 **#命令行大写**
-
-
 
 ```shell
 FROM centos
@@ -1189,5 +1271,75 @@ portainer/portainer   latest    580c0e4e98b0   3 months ago     79.1MB
 centos                latest    300e315adb2f   6 months ago     209MB
 
 
+
+
 ```
+
+***
+
+# 数据卷容器
+
+### --volumes-from
+
+```shell
+# Build an image from a Dockerfile 更具Dockerfile 创建镜像
+[root@hoyin docker-test-volumes]# docker build -f /home/docker-test-volumes/dockerfile -t centos01 .
+Sending build context to Docker daemon  2.048kB
+Step 1/4 : FROM centos
+latest: Pulling from library/centos
+7a0437f04f83: Already exists 
+Digest: sha256:5528e8b1b1719d34604c87e11dcd1c0a20bedf46e83b5632cdeac91b8c04efc1
+Status: Downloaded newer image for centos:latest
+ ---> 300e315adb2f
+Step 2/4 : VOLUME ["/test01"]
+ ---> Running in bfab3286eb00
+Removing intermediate container bfab3286eb00
+ ---> 22bfc79835e7
+Step 3/4 : CMD echo "--------------end---------------"
+ ---> Running in 9e3ebb9ae31f
+Removing intermediate container 9e3ebb9ae31f
+ ---> 51edec24b776
+Step 4/4 : CMD /bin/bash
+ ---> Running in 47ba196bab02
+Removing intermediate container 47ba196bab02
+ ---> 2b810fd8dd82
+Successfully built 2b810fd8dd82
+Successfully tagged centos01:latest
+[root@hoyin docker-test-volumes]# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+centos01     latest    2b810fd8dd82   32 seconds ago   209MB
+nginx        latest    4f380adfc10f   3 hours ago      133MB
+mysql        5.7       2c9028880e58   6 weeks ago      447MB
+centos       latest    300e315adb2f   6 months ago     209MB
+# 查看新生成镜像 创建新容器
+[root@hoyin docker-test-volumes]# docker run -it --name docker01 2b810fd8dd82 
+[root@29e7111c640f /]# exit C+P+Q
+# --volumes-from 继承容器挂载 创建新容器
+[root@hoyin docker-test-volumes]# docker run -it --name docker02 --volumes-from docker01 centos01
+[root@bb2369627996 /]# ls
+bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  test01  tmp  usr  var
+[root@bb2369627996 /]# 
+```
+
+
+
+***
+
+
+
+# Mysql容器数据共享
+
+
+
+```shell
+[root@hoyin test]# docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e  MYSQL_ROOT_PASSWORD=123456 --name mysql01 mysql:5.7
+2f011b57949081bd0d8e00d2db2222aa2992800e9ac7020d46edf49a2a2f767a
+```
+
+```shell
+[root@hoyin test]# docker run -d -p 3311:3306 --volumes-from mysql01 -e  MYSQL_ROOT_PASSWORD=123456 --name mysql02 mysql:5.7
+2f011b57949081bd0d8e00d2db2222aa2992800e9ac7020d46edf49a2a2f767a
+```
+
+### 因为 mysql 有锁表机制，同时间只能启动一个mysql 容器
 
