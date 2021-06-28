@@ -5,13 +5,17 @@ typora-copy-images-to: ./images
 
 # Docker
 
-DockerHub:	https://hub.docker.com/
+**DockerHub:**	https://hub.docker.com/
 
-帮助文档地址：https://docs.docker.com/
+**帮助文档地址：**https://docs.docker.com/
 
 ![image-20210621165559685](images/image-20210621165559685.png)
 
-# 卸载旧版本
+
+
+# Docker安装
+
+## 卸载旧版本
 
 ```shell
 yum remove docker \
@@ -24,17 +28,13 @@ yum remove docker \
                   docker-engine
 ```
 
-# 需要的安装包
+## 需要的安装包
 
 ```shell
 yum install -y yum-utils
 ```
 
-
-
-
-
-# 设置镜像仓库
+## 设置镜像仓库
 
 ```shell
 yum-config-manager \--add-repo \https://download.docker.com/linux/centos/docker-ce.repo (外网)
@@ -44,17 +44,13 @@ yum-config-manager \--add-repo \http://mirrors.aliyun.com/docker-ce/linux/centos
 
 
 
-# 安装相关 docker-ce社区有
-
-
+## 安装相关 docker-ce社区有
 
 ```shell
 yum install docker-ce docker-ce-cli containerd.io
 ```
 
-
-
-# 启动 Docker
+## 启动 Docker
 
 ### systemctl start docker
 
@@ -65,7 +61,7 @@ systemctl start docker
 docker version
 ```
 
-# 重启动 Docker
+## 重启动 Docker
 
 ### systemctl restart docker
 
@@ -78,7 +74,7 @@ docker version
 
 
 
-# Hello-World
+## Hello-World
 
 ```shell
 docker run hello-world
@@ -88,7 +84,7 @@ docker run hello-world
 
 
 
-# 查看镜像
+## 查看镜像
 
 ```shell
 docker images
@@ -96,7 +92,7 @@ docker images
 
 
 
-# 卸载docker
+## 卸载docker
 
 ### yum remove docker-ce docker-ce-cli containerd.io
 
@@ -108,6 +104,8 @@ rm -rf /var/lib/docker
 
 rm -rf /var/lib/containerd
 ```
+
+***
 
 
 
@@ -143,6 +141,8 @@ sudo systemctl daemon-reload
 
 sudo systemctl restart docker
 ```
+
+***
 
 
 
@@ -486,7 +486,7 @@ docker kill	容器Id		#强制停止
 
 # 常用其他命令
 
-### 后台启动容器 docker run -d 镜像名
+### docker run -d 镜像名 [后台启动容器 ]
 
 **docker run -d 镜像名**
 
@@ -501,7 +501,13 @@ docker 容器使用后台运行，就必须要有一个前台进程,docker发现
 容器启动后，发现自己没有提供服务，就会立即停止。就会没有程序
 ```
 
-### 查看logs  docker logs
+#### -e 添加环境配置
+
+```shell
+docker run -d --name elasticsearch02 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node"-eES_3AVA_OPTS="-Xms64m -Xmx512m" elasticsearch:7.6.2
+```
+
+### docker logs [查看logs  ]
 
 **docker logs -ft --tail number 容器Id**
 
@@ -528,7 +534,7 @@ docker 容器使用后台运行，就必须要有一个前台进程,docker发现
 
 
 
-### 查看容器中的进程信息 docker top
+### docker top [查看容器中的进程信息 ]
 
 **docker top 容器Id**
 
@@ -539,7 +545,7 @@ root                3984344             3984323             1                   
 root                3985078             3984344             0                   16:17               ?                   00:00:00            /usr/bin/coreutils --coreutils-prog-shebang=sleep /usr/bin/sleep 1
 ```
 
-### 查看镜像的元数据 docker inspect
+### docker inspect [查看镜像的元数据 ]
 
 **docker inspect 容器Id**
 
@@ -756,9 +762,9 @@ root                3985078             3984344             0                   
 
 ```
 
-### 进入当前正在运行的容器 exec attach
+### exec attach [进入当前正在运行的容器 ]
 
-**docker exec -it 容器id bashShell**
+#### **docker exec -it 容器id bashShell**
 
 ```shell
 [root@hoyin ~]# docker exec -it d71b5024d0cd /bin/bash
@@ -766,7 +772,7 @@ root                3985078             3984344             0                   
 exit 退出后不停止容器
 ```
 
-**docker attach 容器Id**
+#### **docker attach 容器Id**
 
 ```shell
 
@@ -780,7 +786,7 @@ exit 退出后直接停止容器
 #docker attach 	正在运行的终端 	exit 退出后直接停止容器
 ```
 
-### 从容器内拷贝文件到主机 docker cp
+### docker cp [从容器内拷贝文件到主机 ]
 
 **docker cp 容器id：容器内路径  主机路径**
 
@@ -799,6 +805,16 @@ test.js
 
 ```
 
+### docker stats
+
+```shell
+CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+4d7d83c742a1   centos09   0.00%     1.273MiB / 1.776GiB   0.07%     1.41kB / 0B       4.1kB / 0B        1
+99dccf3551f9   nginx01    0.00%     2.309MiB / 1.776GiB   0.13%     17.1kB / 17.7kB   8.19kB / 17.9kB   2
+```
+
+![image-20210622142340309](images/image-20210622142340309-1624853525043.png)
+
 
 
 ### 小结
@@ -813,11 +829,11 @@ test.js
 
 # Docker 安装 Nginx
 
-docker search nginx
+**docker search nginx**
 
-docker pull nginx
+**docker pull nginx**
 
-docker run -d --name nginx01 -p 3344:80 nginx
+**docker run -d --name nginx01 -p 3344:80 nginx**
 
 
 
@@ -912,30 +928,6 @@ Commercial support is available at
 
 ```
 
-
-
-***
-
-
-
-# Docker stats
-
-```shell
-CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
-4d7d83c742a1   centos09   0.00%     1.273MiB / 1.776GiB   0.07%     1.41kB / 0B       4.1kB / 0B        1
-99dccf3551f9   nginx01    0.00%     2.309MiB / 1.776GiB   0.13%     17.1kB / 17.7kB   8.19kB / 17.9kB   2
-```
-
-### -e 添加环境配置
-
-```shell
-docker run -d --name elasticsearch02 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node"-eES_3AVA_OPTS="-Xms64m -Xmx512m" elasticsearch:7.6.2
-```
-
-![image-20210622142340309](images/image-20210622142340309-1624853525043.png)
-
-
-
 ***
 
 
@@ -966,8 +958,6 @@ http://ip:8088
 ![image-20210622153312227](images/image-20210622153312227-1624853529428.png)
 
 ![image-20210622153057205](images/image-20210622153057205-1624853535451.png)
-
-
 
 ***
 
@@ -1080,6 +1070,8 @@ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
 docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e  MYSQL_ROOT_PASSWORD=123456 --name mysql01 mysql:5.7
 ```
 
+
+
 ```shell
 [root@hoyin test]# docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e  MYSQL_ROOT_PASSWORD=123456 --name mysql01 mysql:5.7
 2f011b57949081bd0d8e00d2db2222aa2992800e9ac7020d46edf49a2a2f767a
@@ -1093,7 +1085,7 @@ docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/
 
 # 具名和匿名挂载
 
-### docker volume 查看挂载信息
+### docker volume [查看挂载信息]
 
 ```shell
 [root@hoyin test]# docker volume ls
@@ -1101,6 +1093,8 @@ DRIVER    VOLUME NAME
 local     5ca43c35e2ffa9a6018a043cc14998b806fe39e8c93fb8625da467339aa4c61c
 local     d3a6ea05aff012486e272486b2ddd7f2f08ea10801dbbd3e8e5a42734c9dfa7c
 ```
+
+
 
 ```
 -v 容器内路径			#匿名挂载
@@ -1116,6 +1110,8 @@ local     d3a6ea05aff012486e272486b2ddd7f2f08ea10801dbbd3e8e5a42734c9dfa7c
 #-v 容器内路径
 docker run -d -P --name nginx -v /etc/nginx nignx
 ```
+
+
 
 ```shell
 [root@hoyin test]# docker run -d -P --name nginx01 -v /ect/nginx nginx
@@ -1221,11 +1217,13 @@ Remove all unused local volumes
 
 10. docker start container-Id
 
+***
+
 
 
 # Dockerfile
 
-### Dokerfile 介绍
+## Dokerfile 介绍
 
 **dockerfile 是用来构建Docker镜像的文件！**
 
@@ -1236,13 +1234,13 @@ Remove all unused local volumes
 3. docker run 	   运行镜像
 4. docker push 	发布（DockerHub, 阿里云镜像仓库）
 
-### Dockerfile 构建过程
+## Dockerfile 构建过程
 
 **基础知识**：
 
-### Dockerfile 指令
+## Dockerfile 指令
 
-### Docker image 发布
+## Docker image 发布
 
 #### docker login
 
@@ -1258,7 +1256,7 @@ Login Succeeded
 
 
 
-### docker tag
+#### docker tag
 
 ```shell
 [root@hoyin docker-test-volumes]# docker images
@@ -1284,7 +1282,7 @@ centos          latest    300e315adb2f   6 months ago   209MB
 
 
 
-### docker push 
+#### docker push 
 
 ```shell
 [root@hoyin docker-test-volumes]# docker push shoyin/test01:0.1
@@ -1293,7 +1291,7 @@ The push refers to repository [docker.io/shoyin/test01]
 0.1: digest: sha256:ea9d30fdad33e84a6a90355483d0f325b38125facd34f93d3802afe0a828fb36 size: 529
 ```
 
-### docker pull
+#### docker pull
 
 ```shell
 [root@hoyin docker-test-volumes]# docker pull shoyin/test01:0.1
@@ -1306,7 +1304,7 @@ docker.io/shoyin/test01:0.1
 
 
 
-### dicker save 打包
+#### dicker save 打包
 
 ```shell
 $ docker save busybox > busybox.tar
@@ -1333,11 +1331,11 @@ $ docker save -o fedora-latest.tar fedora:latest
 
 ```
 
-### docker load
+#### docker load
 
 **docker load :** 导入使用 [docker save](https://www.runoob.com/docker/docker-save-command.html) 命令导出的镜像。
 
-### 语法
+##### 语法
 
 ```
 docker load [OPTIONS]
@@ -1353,7 +1351,7 @@ OPTIONS 说明：
 
   
 
-### 实例
+##### 实例
 
 导入镜像：
 
@@ -1402,9 +1400,9 @@ shoyin/test01   0.1       dbfdd81c9772   5 hours ago   209MB
 
 ```
 
-### docker build
+#### docker build
 
-### **#编辑Dockerfile**
+##### **编辑Dockerfile**
 
 ```shell
 [root@hoyin docker-test-volumes]# vim dockerfile
@@ -1419,7 +1417,7 @@ CMD echo "--------------end---------------"
 CMD /bin/bash
 ```
 
-### **#VOLUME ["/volume01","/volume02","/绝对路径"]**
+##### **VOLUME ["/volume01","/volume02","/绝对路径"]**
 
 **#docker build**
 
@@ -1463,7 +1461,7 @@ centos                latest    300e315adb2f   6 months ago     209MB
 
 # 数据卷容器
 
-### --volumes-from
+## --volumes-from
 
 ```shell
 # Build an image from a Dockerfile 根据Dockerfile 创建镜像
@@ -1507,7 +1505,7 @@ bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  s
 
 
 
-### Mysql容器数据共享
+## Mysql容器数据共享
 
 
 
@@ -1525,9 +1523,9 @@ bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  s
 
 
 
-### #共享数据卷共用宿主机同一文件夹  1vN（共享）
+## 共享数据卷共用宿主机同一文件夹  1vN（共享）
 
-**删除宿主机目录内容** 容器都删除
+## **删除宿主机目录内容 容器都删除**
 
 ***
 
@@ -1676,13 +1674,13 @@ PING t02 (172.17.0.3) 56(84) bytes of data.
 64 bytes from t02 (172.17.0.3): icmp_seq=3 ttl=64 time=0.077 ms
 ```
 
+***
+
 
 
 # 自定义网络
 
-### docker network
-
-### 网络模式
+## 网络模式
 
 bridge:	桥接（docker 默认）
 
@@ -1692,7 +1690,7 @@ host:	和宿主机共享
 
 container: 容器
 
-**查看所有网络**
+### docker network ls  [查看所有网络]
 
 ```shell
 [root@hoyin docker-test-volumes]# docker network ls
@@ -1702,21 +1700,16 @@ NETWORK ID     NAME      DRIVER    SCOPE
 f26162d67a66   none      null      local
 ```
 
-
-
 ```
 
 默认配置 dokcer0
 docker run -d -P --name t01  tomcat
-
 docker run -d -P --name t01 --net bridage tomcat
 ```
 
 
 
-### 创建网络
-
-#### docker network create
+### docker network create  [创建网络]
 
 
 
@@ -1768,7 +1761,7 @@ f26162d67a66   none      null      local
 
 ```
 
-更具新建网络创建容器
+根据新建网络创建容器
 
 ```shell
 [root@hoyin docker-test-volumes]# docker run -d -P --name mynet01 --net mynet tomcat
@@ -1834,11 +1827,9 @@ PING mynet02 (192.168.0.3) 56(84) bytes of data.
 
 
 
-### 网络联通
+## 网络联通
 
-#### docker network connect [OPTIONS] NETWORK CONTAINER
-
-
+### docker network connect [OPTIONS] NETWORK CONTAINER
 
 ```shell
 [root@hoyin docker-test-volumes]# docker run -d -P --name t01 tomcat
@@ -1901,11 +1892,11 @@ PING mynet02 (192.168.0.3) 56(84) bytes of data.
 
 
 
-### Redis 集群部署
+***
 
 
 
-
+## Redis 集群部署
 
 ```shell
 [root@hoyin docker-test-volumes]# docker network create redis --subnet 192.169.0.0/16
@@ -2081,6 +2072,8 @@ d1bf8c446cc8594f5fdc174ae98b2867b41ccd10 192.169.0.15:6379@16379 slave f345e1c37
 
 ```
 
+***
+
 
 
 # Docker compose
@@ -2144,4 +2137,241 @@ services:
 
 
 ```
+
+***
+
+# Docker swarm
+
+## docker swarm init [初始化节点]
+
+**获取令牌**
+
+```shell
+[root@hoyin ~]# docker swarm --hlep
+unknown flag: --hlep
+See 'docker swarm --help'.
+
+Usage:  docker swarm COMMAND
+
+Manage Swarm
+
+Commands:
+  ca          Display and rotate the root CA
+  init        Initialize a swarm
+  join        Join a swarm as a node and/or manager
+  join-token  Manage join tokens
+  leave       Leave the swarm
+  unlock      Unlock swarm
+  unlock-key  Manage the unlock key
+  update      Update the swarm
+
+Run 'docker swarm COMMAND --help' for more information on a command.
+
+
+[root@hoyin ~]# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 00:16:3e:22:53:5c brd ff:ff:ff:ff:ff:ff
+    inet 172.26.47.163/20 brd 172.26.47.255 scope global dynamic noprefixroute eth0
+       valid_lft 314837322sec preferred_lft 314837322sec
+    inet6 fe80::216:3eff:fe22:535c/64 scope link 
+       valid_lft forever preferred_lft forever
+3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:ca:1a:d6:e8 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:caff:fe1a:d6e8/64 scope link 
+       valid_lft forever preferred_lft forever
+[root@hoyin ~]# docker swarm init --advertise-addr 172.26.47.163
+Swarm initialized: current node (yw4y25qj96hejhp7vo7hf0e0b) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-2qtd1syz1n24bs9ryih5zag9sh10t32zqt7lcfo9eyiu6xekyf-6uodyx1wna6xztg0ftvurpjpl 172.26.47.163:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+```
+
+## docker swarm join [加入节点]
+
+#在同一网段 其他机器执行 
+
+### docker swarm join-token manager
+
+### docker swarm join-token worker
+
+```shell
+docker swarm join --token SWMTKN-1-2qtd1syz1n24bs9ryih5zag9sh10t32zqt7lcfo9eyiu6xekyf-6uodyx1wna6xztg0ftvurpjpl 172.26.47.163:2377
+```
+
+![image-20210628162235265](images/image-20210628162235265.png)
+
+```shell
+[root@hoyin ~]# docker node ls
+ID                            HOSTNAME   STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+yw4y25qj96hejhp7vo7hf0e0b *   hoyin      Ready     Active         Leader           20.10.7
+
+
+```
+
+```shell
+[root@hoyin ~]# docker swarm join-token manager
+To add a manager to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-2qtd1syz1n24bs9ryih5zag9sh10t32zqt7lcfo9eyiu6xekyf-4r11rs9hlrxn6yswdv2xa4juj 172.26.47.163:2377
+
+[root@hoyin ~]# docker swarm join-token worker
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-2qtd1syz1n24bs9ryih5zag9sh10t32zqt7lcfo9eyiu6xekyf-6uodyx1wna6xztg0ftvurpjpl 172.26.47.163:2377
+
+
+```
+
+### docker node  [serivce 工作节点]
+
+```shell
+[root@hoyin ~]# docker node ls
+ID                            HOSTNAME   STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+yw4y25qj96hejhp7vo7hf0e0b *   hoyin      Ready     Active         Leader           20.10.7
+
+```
+
+![image-20210628162844251](images/image-20210628162844251.png)
+
+## Raft协议
+
+
+
+
+
+# Docker service
+
+```shell
+
+[root@hoyin ~]# docker service --help
+
+Usage:  docker service COMMAND
+
+Manage services
+
+Commands:
+  create      Create a new service
+  inspect     Display detailed information on one or more services
+  logs        Fetch the logs of a service or task
+  ls          List services
+  ps          List the tasks of one or more services
+  rm          Remove one or more services
+  rollback    Revert changes to a service's configuration
+  scale       Scale one or multiple replicated services
+  update      Update a service
+
+Run 'docker service COMMAND --help' for more information on a command.
+
+```
+
+## docker service create
+
+**docker service create -p 8888:80 --name myServiceName nginx**
+
+```shell
+[root@hoyin ~]# docker service create -p 8888:80 --name mynginx nginx
+bicn5ssn11f4v4uopjtzyruvu
+overall progress: 1 out of 1 tasks 
+1/1: running   [==================================================>] 
+verify: Service converged 
+[root@hoyin ~]# docker service ls
+ID             NAME      MODE         REPLICAS   IMAGE          PORTS
+bicn5ssn11f4   mynginx   replicated   1/1        nginx:latest   *:8888->80/tcp
+
+[root@hoyin ~]# docker service ps mynginx
+ID             NAME        IMAGE          NODE      DESIRED STATE   CURRENT STATE           ERROR     PORTS
+4hrv36hbffdf   mynginx.1   nginx:latest   hoyin     Running         Running 2 minutes ago             
+[root@hoyin ~]# 
+[root@hoyin ~]# 
+[root@hoyin ~]# docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS     NAMES
+f8d6b65691c2   nginx:latest   "/docker-entrypoint.…"   3 minutes ago   Up 3 minutes   80/tcp    mynginx.1.4hrv36hbffdf3gtmg6jhsxz41
+
+```
+
+
+
+### docker service update  [扩缩容]
+
+**docker service update --replicas 10 myServiceName** 
+
+```shell
+[root@hoyin ~]# docker service update --replicas 3 mynginx
+mynginx
+overall progress: 3 out of 3 tasks 
+1/3: running   [==================================================>] 
+2/3: running   [==================================================>] 
+3/3: running   [==================================================>] 
+verify: Service converged 
+[root@hoyin ~]# docker service ls
+ID             NAME      MODE         REPLICAS   IMAGE          PORTS
+bicn5ssn11f4   mynginx   replicated   3/3        nginx:latest   *:8888->80/tcp
+[root@hoyin ~]# docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
+e1b95ef6f3dd   nginx:latest   "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    mynginx.3.ryyvjmnerogpq18cketsleuie
+71b399adacb7   nginx:latest   "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    mynginx.2.ozpntklm0b34fzlpco6qgfans
+f8d6b65691c2   nginx:latest   "/docker-entrypoint.…"   7 minutes ago        Up 7 minutes        80/tcp    mynginx.1.4hrv36hbffdf3gtmg6jhsxz41
+
+```
+
+## docker service scale [扩缩容]
+
+**docker service scale myServiceName=number**
+
+```shell
+[root@hoyin ~]# docker service scale mynginx=5
+mynginx scaled to 5
+overall progress: 5 out of 5 tasks 
+1/5: running   [==================================================>] 
+2/5: running   [==================================================>] 
+3/5: running   [==================================================>] 
+4/5: running   [==================================================>] 
+5/5: running   [==================================================>] 
+verify: Service converged 
+[root@hoyin ~]# docker service ps mynginx
+ID             NAME        IMAGE          NODE      DESIRED STATE   CURRENT STATE            ERROR     PORTS
+4hrv36hbffdf   mynginx.1   nginx:latest   hoyin     Running         Running 13 minutes ago             
+n96gcnz26ucf   mynginx.2   nginx:latest   hoyin     Running         Running 53 seconds ago             
+ifl8fuzz72ah   mynginx.3   nginx:latest   hoyin     Running         Running 17 seconds ago             
+slqyyrrta95h   mynginx.4   nginx:latest   hoyin     Running         Running 17 seconds ago             
+imdze1gvpbh4   mynginx.5   nginx:latest   hoyin     Running         Running 17 seconds ago             
+[root@hoyin ~]# docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
+1d3200f4d7ff   nginx:latest   "/docker-entrypoint.…"   32 seconds ago       Up 29 seconds       80/tcp    mynginx.4.slqyyrrta95hxgrcl8cnnmrb2
+b2b2b4336fb8   nginx:latest   "/docker-entrypoint.…"   32 seconds ago       Up 29 seconds       80/tcp    mynginx.5.imdze1gvpbh4u5xtaamzwav2k
+43939560d992   nginx:latest   "/docker-entrypoint.…"   32 seconds ago       Up 29 seconds       80/tcp    mynginx.3.ifl8fuzz72ahgohqzpzlk2qzy
+f7f9cef5121f   nginx:latest   "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    mynginx.2.n96gcnz26ucfb5uqchqsfiyty
+f8d6b65691c2   nginx:latest   "/docker-entrypoint.…"   14 minutes ago       Up 13 minutes       80/tcp    mynginx.1.4hrv36hbffdf3gtmg6jhsxz41
+
+```
+
+### 概念总结
+
+**swarm**
+
+集群的管理和编号, dokcer可以初始化一个swarm集群，其他节点可以加入（管理者。工作者）
+
+**Service**
+
+任务，可以在管理节点或者工作节点运行 。
+
+**Node**
+
+就是一个docker节点。多个节点组成一个网络集群。
+
+**Task**
+
+容器任务
 
