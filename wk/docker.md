@@ -4,6 +4,8 @@ DockerHub:	https://hub.docker.com/
 
 帮助文档地址：https://docs.docker.com/
 
+![image-20210621165559685](/image-20210621165559685.png)
+
 # 卸载旧版本
 
 ```shell
@@ -77,7 +79,7 @@ docker version
 docker run hello-world
 ```
 
-![image-20210616111258977](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210616111258977.png)
+![image-20210616111258977](/image-20210616111258977.png)
 
 
 
@@ -114,7 +116,7 @@ rm -rf /var/lib/containerd
 
 镜像加速器
 
-![image-20210621115929437](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210621115929437.png)
+![image-20210621115929437](/image-20210621115929437.png)
 
 
 
@@ -141,7 +143,7 @@ sudo systemctl restart docker
 
 # docker run 
 
-![image-20210621120901286](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210621120901286.png)
+![image-20210621120901286](/image-20210621120901286.png)
 
 
 
@@ -157,7 +159,7 @@ Docker 是一个Client-Server 结构的系统，Docker的守护进程运行再�
 
 DockerServer 接收到Docker-Client的指令，就会执行这个命令！
 
-![image-20210621121719922](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210621121719922.png)
+![image-20210621121719922](/image-20210621121719922.png)
 
 ### Docker 为啥比VM快
 
@@ -171,7 +173,7 @@ DockerServer 接收到Docker-Client的指令，就会执行这个命令！
 
 Docker不需要像虚拟机一样重新加载一个操作系统的内核，避免引导。而Docker利用的是宿主机的操纵系统。省略了这个复杂的过程，秒级！
 
-![image-20210621133748950](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210621133748950.png)
+![image-20210621133748950](/image-20210621133748950.png)
 
 
 
@@ -796,7 +798,7 @@ test.js
 
 ### 小结
 
-![image-20210621165559685](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210621165559685.png)
+![image-20210621165559685](/image-20210621165559685.png)
 
 
 
@@ -911,7 +913,7 @@ Commercial support is available at
 
 
 
-# Docker status
+# Docker stats
 
 ```shell
 CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
@@ -925,7 +927,7 @@ CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     
 docker run -d --name elasticsearch02 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node"-eES_3AVA_OPTS="-Xms64m -Xmx512m" elasticsearch:7.6.2
 ```
 
-![image-20210622142340309](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210622142340309.png)
+![image-20210622142340309](/image-20210622142340309.png)
 
 
 
@@ -956,9 +958,9 @@ Status: Downloaded newer image for portainer/portainer:latest
 
 http://ip:8088
 
-![image-20210622153312227](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210622153312227.png)
+![image-20210622153312227](/image-20210622153312227.png)
 
-![image-20210622153057205](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210622153057205.png)
+![image-20210622153057205](/image-20210622153057205.png)
 
 
 
@@ -1033,7 +1035,7 @@ docker run -it -v /home/test:/home centos10 /bin/bash
 docker inspect 容器id
 ```
 
-![image-20210622162856592](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210622162856592.png)
+![image-20210622162856592](/image-20210622162856592.png)
 
 
 
@@ -1182,9 +1184,9 @@ rw		readwrite
 #ro 只能通过宿主机操作，容器内没有权限，无法操作
 ```
 
+### docker volume prune
 
-
-
+Remove all unused local volumes
 
 ### Docker 已有容器挂载新目录
 
@@ -1217,6 +1219,183 @@ rw		readwrite
 
 
 # Dockerfile
+
+### Dokerfile 介绍
+
+**dockerfile 是用来构建Docker镜像的文件！**
+
+构建步骤：
+
+1. 编辑-个dockerfile 文件
+2. docker build 	构建成新镜像
+3. docker run 	   运行镜像
+4. docker push 	发布（DockerHub, 阿里云镜像仓库）
+
+### Dockerfile 构建过程
+
+**基础知识**：
+
+### Dockerfile 指令
+
+### Docker image 发布
+
+#### docker login
+
+```shell
+[root@hoyin docker-test-volumes]# docker login -u shoyin
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+```
+
+
+
+### docker tag
+
+```shell
+[root@hoyin docker-test-volumes]# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+test02       latest    10d7306f365e   4 hours ago    209MB
+test01       latest    dbfdd81c9772   4 hours ago    209MB
+centos01     latest    2b810fd8dd82   23 hours ago   209MB
+nginx        latest    4f380adfc10f   25 hours ago   133MB
+mysql        5.7       2c9028880e58   6 weeks ago    447MB
+centos       latest    300e315adb2f   6 months ago   209MB
+[root@hoyin docker-test-volumes]# docker tag dbfdd81c9772 shoyin/test01:0.1
+[root@hoyin docker-test-volumes]# docker images
+REPOSITORY      TAG       IMAGE ID       CREATED        SIZE
+test02          latest    10d7306f365e   4 hours ago    209MB
+shoyin/test01   0.1       dbfdd81c9772   4 hours ago    209MB
+test01          latest    dbfdd81c9772   4 hours ago    209MB
+centos01        latest    2b810fd8dd82   23 hours ago   209MB
+nginx           latest    4f380adfc10f   25 hours ago   133MB
+mysql           5.7       2c9028880e58   6 weeks ago    447MB
+centos          latest    300e315adb2f   6 months ago   209MB
+```
+
+
+
+
+### docker push 
+
+```shell
+[root@hoyin docker-test-volumes]# docker push shoyin/test01:0.1
+The push refers to repository [docker.io/shoyin/test01]
+2653d992f4ef: Mounted from library/centos 
+0.1: digest: sha256:ea9d30fdad33e84a6a90355483d0f325b38125facd34f93d3802afe0a828fb36 size: 529
+```
+
+### docker pull
+
+```shell
+[root@hoyin docker-test-volumes]# docker pull shoyin/test01:0.1
+0.1: Pulling from shoyin/test01
+7a0437f04f83: Pull complete 
+Digest: sha256:ea9d30fdad33e84a6a90355483d0f325b38125facd34f93d3802afe0a828fb36
+Status: Downloaded newer image for shoyin/test01:0.1
+docker.io/shoyin/test01:0.1
+```
+
+
+
+### dicker save 打包
+
+```shell
+$ docker save busybox > busybox.tar
+
+$ ls -sh busybox.tar
+
+2.7M busybox.tar
+
+$ docker save --output busybox.tar busybox
+
+$ ls -sh busybox.tar
+
+2.7M busybox.tar
+
+$ docker save -o fedora-all.tar fedora
+
+$ docker save -o fedora-latest.tar fedora:latest
+
+[root@hoyin docker-test-volumes]# docker save -o test.tar shoyin/test01:0.1
+[root@hoyin docker-test-volumes]# ll
+总用量 211468
+-rw-r--r-- 1 root root        88 6月  24 12:00 dockerfile
+-rw------- 1 root root 216536064 6月  24 16:50 test.tar
+
+```
+
+### docker load
+
+**docker load :** 导入使用 [docker save](https://www.runoob.com/docker/docker-save-command.html) 命令导出的镜像。
+
+### 语法
+
+```
+docker load [OPTIONS]
+```
+
+OPTIONS 说明：
+
+- **--input , -i :** 指定导入的文件，代替 STDIN。
+
+  
+
+- **--quiet , -q :** 精简输出信息。
+
+  
+
+### 实例
+
+导入镜像：
+
+```shell
+$ docker image ls
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+
+$ docker load < busybox.tar.gz
+
+Loaded image: busybox:latest
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+busybox             latest              769b9341d937        7 weeks ago         2.489 MB
+
+$ docker load --input fedora.tar
+
+Loaded image: fedora:rawhide
+
+Loaded image: fedora:20
+
+$ docker images
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+busybox             latest              769b9341d937        7 weeks ago         2.489 MB
+fedora              rawhide             0d20aec6529d        7 weeks ago         387 MB
+fedora              20                  58394af37342        7 weeks ago         385.5 MB
+fedora              heisenbug           58394af37342        7 weeks ago         385.5 MB
+fedora              latest              58394af37342        7 weeks ago         385.5 MB
+
+[root@hoyin docker-test-volumes]# docker images
+REPOSITORY      TAG       IMAGE ID       CREATED       SIZE
+shoyin/test01   0.1       dbfdd81c9772   5 hours ago   209MB
+[root@hoyin docker-test-volumes]# docker rmi -f shoyin/test01:0.1
+Untagged: shoyin/test01:0.1
+Untagged: shoyin/test01@sha256:ea9d30fdad33e84a6a90355483d0f325b38125facd34f93d3802afe0a828fb36
+Deleted: sha256:dbfdd81c97722101bc1f0ea0b243001a4bdf9ed1a1458620a698f0882a82274a
+Deleted: sha256:2653d992f4ef2bfd27f94db643815aa567240c37732cae1405ad1c1309ee9859
+[root@hoyin docker-test-volumes]# docker load -i test.tar 
+2653d992f4ef: Loading layer [==================================================>]  216.5MB/216.5MB
+Loaded image: shoyin/test01:0.1
+[root@hoyin docker-test-volumes]# docker images
+REPOSITORY      TAG       IMAGE ID       CREATED       SIZE
+shoyin/test01   0.1       dbfdd81c9772   5 hours ago   209MB
+[root@hoyin docker-test-volumes]# 
+
+```
 
 ### docker build
 
@@ -1282,7 +1461,7 @@ centos                latest    300e315adb2f   6 months ago     209MB
 ### --volumes-from
 
 ```shell
-# Build an image from a Dockerfile 更具Dockerfile 创建镜像
+# Build an image from a Dockerfile 根据Dockerfile 创建镜像
 [root@hoyin docker-test-volumes]# docker build -f /home/docker-test-volumes/dockerfile -t centos01 .
 Sending build context to Docker daemon  2.048kB
 Step 1/4 : FROM centos
@@ -1323,11 +1502,7 @@ bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  s
 
 
 
-***
-
-
-
-# Mysql容器数据共享
+### Mysql容器数据共享
 
 
 
@@ -1342,4 +1517,626 @@ bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  s
 ```
 
 ### 因为 mysql 有锁表机制，同时间只能启动一个mysql 容器
+
+
+
+### #共享数据卷共用宿主机同一文件夹  1vN（共享）
+
+**删除宿主机目录内容** 容器都删除
+
+***
+
+# Docker 网络
+
+## Docker0
+
+### 每一个安装Docker 都会分配一个虚拟网卡 veth-pair
+
+```shell
+[root@hoyin docker-test-volumes]# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo ###本机回环地址
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 00:16:3e:22:53:5c brd ff:ff:ff:ff:ff:ff
+    inet 172.26.47.163/20 brd 172.26.47.255 scope global dynamic noprefixroute eth0 ###阿里云网络地址
+       valid_lft 315119431sec preferred_lft 315119431sec
+    inet6 fe80::216:3eff:fe22:535c/64 scope link 
+       valid_lft forever preferred_lft forever
+3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:ca:1a:d6:e8 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0 ### Docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:caff:fe1a:d6e8/64 scope link 
+       valid_lft forever preferred_lft forever
+```
+
+### 每新建一个Docker container 都会创建一对虚拟网址
+
+```shell
+[root@hoyin docker-test-volumes]# docker run -d -P --name t01 tomcat # 新建容器
+15ff6001fc433129a097d7cc042147739c8f40c56341bb57a018bbf269faba9c
+[root@hoyin docker-test-volumes]# docker ps
+CONTAINER ID   IMAGE     COMMAND             CREATED          STATUS          PORTS                                         NAMES
+15ff6001fc43   tomcat    "catalina.sh run"   13 seconds ago   Up 10 seconds   0.0.0.0:49153->8080/tcp, :::49153->8080/tcp   t01
+[root@hoyin docker-test-volumes]# docker exec -it 15ff6001fc43 ip addr # 查看新容器网络
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+84: eth0@if85: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+
+[root@hoyin docker-test-volumes]# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 00:16:3e:22:53:5c brd ff:ff:ff:ff:ff:ff
+    inet 172.26.47.163/20 brd 172.26.47.255 scope global dynamic noprefixroute eth0
+       valid_lft 315118323sec preferred_lft 315118323sec
+    inet6 fe80::216:3eff:fe22:535c/64 scope link 
+       valid_lft forever preferred_lft forever
+3: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:ca:1a:d6:e8 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:caff:fe1a:d6e8/64 scope link 
+       valid_lft forever preferred_lft forever
+85: veth9eb2189@if84: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default 
+    link/ether da:3e:2f:13:0a:a9 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::d83e:2fff:fe13:aa9/64 scope link 
+       valid_lft forever preferred_lft forever
+###
+### 84: eth0@if85: <===> 85: veth9eb2189@if84:
+###
+
+
+
+```
+
+### 容器之间 ip 互通
+
+```shell
+[root@hoyin docker-test-volumes]# docker exec -it t02 ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+86: eth0@if87: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.3/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+[root@hoyin docker-test-volumes]# docker exec -it t02 /bin/bash
+root@20cfe38b13c0:/usr/local/tomcat# ping 172.17.0.2 #  t02  ping  t01
+PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
+64 bytes from 172.17.0.2: icmp_seq=1 ttl=64 time=0.099 ms
+64 bytes from 172.17.0.2: icmp_seq=2 ttl=64 time=0.074 ms
+64 bytes from 172.17.0.2: icmp_seq=3 ttl=64 time=0.073 ms
+###
+### t02  ping  t01
+###
+       
+```
+
+![image-20210625102805801](/image-20210625102805801.png)
+
+
+
+**所有容器不指定网络的情况下，都是docker0路由的，docker会给容器分配哟个默认的可用ip**
+
+### Docker0 与物理网卡是桥接模式
+
+![image-20210625103335995](/image-20210625103335995.png)
+
+
+
+### docker --link
+
+--link 在容器内 /etc/hosts 添加目标地址
+
+```shell
+root@a37db73ce14c:/etc# cat hosts
+127.0.0.1       localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+172.17.0.3      t02 20cfe38b13c0
+172.17.0.4      a37db73ce14c
+```
+
+
+
+```shell
+[root@hoyin docker-test-volumes]# docker exec -it t02 ping t01
+ping: t01: Name or service not known
+
+[root@hoyin docker-test-volumes]# docker run -d -P --name t03 --link t02 tomcat
+a37db73ce14cb07b35f60443f8105ee9b4b11cf9e45b64fd58129405ada26e0f
+### 通过--link 通过容器名ping 通
+[root@hoyin docker-test-volumes]# docker exec -it t03 ping  t02
+PING t02 (172.17.0.3) 56(84) bytes of data.
+64 bytes from t02 (172.17.0.3): icmp_seq=1 ttl=64 time=0.102 ms
+64 bytes from t02 (172.17.0.3): icmp_seq=2 ttl=64 time=0.088 ms
+64 bytes from t02 (172.17.0.3): icmp_seq=3 ttl=64 time=0.077 ms
+```
+
+
+
+# 自定义网络
+
+### docker network
+
+### 网络模式
+
+bridge:	桥接（docker 默认）
+
+none:	不配置
+
+host:	和宿主机共享
+
+container: 容器
+
+**查看所有网络**
+
+```shell
+[root@hoyin docker-test-volumes]# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+9f740ac7996a   bridge    bridge    local
+28a223805c7b   host      host      local
+f26162d67a66   none      null      local
+```
+
+
+
+```
+
+默认配置 dokcer0
+docker run -d -P --name t01  tomcat
+
+docker run -d -P --name t01 --net bridage tomcat
+```
+
+
+
+### 创建网络
+
+#### docker network create
+
+
+
+```shell
+#--driver bridge
+#--subnet 192.168.0.0/16
+#--gateway 192.168.0.1
+#
+[root@hoyin docker-test-volumes]# docker network create --driver bridge --subnet 192.168.0.0/16 --gateway 192.168.0.1 mynet
+6d3b62f9cf70a6113a41d66fc6cecca0f58df447ef6b9fc507dddba6a7448726
+[root@hoyin docker-test-volumes]# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+9f740ac7996a   bridge    bridge    local
+28a223805c7b   host      host      local
+6d3b62f9cf70   mynet     bridge    local
+f26162d67a66   none      null      local
+
+[root@hoyin docker-test-volumes]# docker network inspect mynet
+[
+    {
+        "Name": "mynet",
+        "Id": "6d3b62f9cf70a6113a41d66fc6cecca0f58df447ef6b9fc507dddba6a7448726",
+        "Created": "2021-06-25T10:57:48.535950532+08:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.0.0/16",
+                    "Gateway": "192.168.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+
+```
+
+更具新建网络创建容器
+
+```shell
+[root@hoyin docker-test-volumes]# docker run -d -P --name mynet01 --net mynet tomcat
+a3df175409f8dda799661beb994946966863a1b33a2b8e6b51c7514d9af0b709
+[root@hoyin docker-test-volumes]# docker run -d -P --name mynet02 --net mynet tomcat
+1d1a2e452f49f53265864687c8dbb6255e31af292493a27ba9dde7af41263caa
+[root@hoyin docker-test-volumes]# docker network inspect mynet
+[
+    {
+        "Name": "mynet",
+        "Id": "6d3b62f9cf70a6113a41d66fc6cecca0f58df447ef6b9fc507dddba6a7448726",
+        "Created": "2021-06-25T10:57:48.535950532+08:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.0.0/16",
+                    "Gateway": "192.168.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "1d1a2e452f49f53265864687c8dbb6255e31af292493a27ba9dde7af41263caa": {
+                "Name": "mynet02",
+                "EndpointID": "9fcaa406f90c3cc8e53db7964a894db4a04b6abfc035e38d8a4921f3d9c0038d",
+                "MacAddress": "02:42:c0:a8:00:03",
+                "IPv4Address": "192.168.0.3/16",
+                "IPv6Address": ""
+            },
+            "a3df175409f8dda799661beb994946966863a1b33a2b8e6b51c7514d9af0b709": {
+                "Name": "mynet01",
+                "EndpointID": "f23334eb17933c81f9c7934ddf7de5a3376ca3e43393e1771e45b931f4f095f3",
+                "MacAddress": "02:42:c0:a8:00:02",
+                "IPv4Address": "192.168.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+### 新建的容器网络地址 在 [Containers]
+
+[root@hoyin docker-test-volumes]# docker exec -it mynet01 /bin/bash
+root@a3df175409f8:/usr/local/tomcat# 
+root@a3df175409f8:/usr/local/tomcat# ping mynet02
+PING mynet02 (192.168.0.3) 56(84) bytes of data.
+64 bytes from mynet02.mynet (192.168.0.3): icmp_seq=1 ttl=64 time=0.082 ms
+64 bytes from mynet02.mynet (192.168.0.3): icmp_seq=2 ttl=64 time=0.067 ms
+
+```
+
+
+
+### 网络联通
+
+#### docker network connect [OPTIONS] NETWORK CONTAINER
+
+
+
+```shell
+[root@hoyin docker-test-volumes]# docker run -d -P --name t01 tomcat
+4f416f9b98b1d0cb9b1171e262f2af0daf44a3fa3a9ea38cb1ae9a8d81c05c2c
+[root@hoyin docker-test-volumes]# docker network connect mynet t01
+[root@hoyin docker-test-volumes]# docker network inspect mynet
+[
+    {
+        "Name": "mynet",
+        "Id": "6d3b62f9cf70a6113a41d66fc6cecca0f58df447ef6b9fc507dddba6a7448726",
+        "Created": "2021-06-25T10:57:48.535950532+08:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.0.0/16",
+                    "Gateway": "192.168.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "1d1a2e452f49f53265864687c8dbb6255e31af292493a27ba9dde7af41263caa": {
+                "Name": "mynet02",
+                "EndpointID": "9fcaa406f90c3cc8e53db7964a894db4a04b6abfc035e38d8a4921f3d9c0038d",
+                "MacAddress": "02:42:c0:a8:00:03",
+                "IPv4Address": "192.168.0.3/16",
+                "IPv6Address": ""
+            },
+            "4f416f9b98b1d0cb9b1171e262f2af0daf44a3fa3a9ea38cb1ae9a8d81c05c2c": {
+                "Name": "t01",
+                "EndpointID": "a20a8e0f82fa23ab60b93ea096ed93c52836708a1dece19a713016fbe6d7b7a5",
+                "MacAddress": "02:42:c0:a8:00:04",
+                "IPv4Address": "192.168.0.4/16",
+                "IPv6Address": ""
+            },
+            "a3df175409f8dda799661beb994946966863a1b33a2b8e6b51c7514d9af0b709": {
+                "Name": "mynet01",
+                "EndpointID": "f23334eb17933c81f9c7934ddf7de5a3376ca3e43393e1771e45b931f4f095f3",
+                "MacAddress": "02:42:c0:a8:00:02",
+                "IPv4Address": "192.168.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+```
+
+
+
+### Redis 集群部署
+
+
+
+
+
+```shell
+[root@hoyin docker-test-volumes]# docker network create redis --subnet 192.169.0.0/16
+e219f39a0cbd34605878b7ff35e7c5829444a90f96042e7cc41b2d692f8ac9c4
+
+for port in $(seq 1 6); \
+do \
+mkdir -p /mydata/redis/node-${port}/conf
+touch /mydata/redis/node-${port}/conf/redis.conf
+cat << EOF >/mydata/redis/node-${port}/conf/redis.conf
+port 6379
+bind 0.0.0.0
+cluster-enabled yes
+cluster-config-file nodes.conf
+cluster-node-timeout 5000
+cluster-announce-ip 192.169.0.1${port}
+cluster-announce-port 6379
+cluster-announce-bus-port 16379
+appendonly yes
+EOF
+done
+
+
+for port in $(seq 1 6); \
+do \
+docker run -p 637${port}:6379 -p 1637${port}:16379 --name redis0${port} -v /mydata/redis/node-${port}/data:/data -v /mydata/redis/node-${port}/conf/redis.conf:/etc/redis/redis.conf -d --net redis --ip 192.169.0.1${port} redis:5.0.9-alpine3.11 redis-server /etc/redis/redis.conf
+done
+
+docker run -d -p 6371:6379 -p 9371:6379 --name redis01 -v /mydata/redis/node-1/data：data -v /mydata/redis/node-1/conf/redis/conf:/etc/redis/redis.conf --net redis --ip 192.169.0.11 redis:5.0.9-alpine3.11 redis-server /etc/redis/redis.conf
+
+docker run -d -p 6372:6379 -p 9372:6379 --name redis02 -v /mydata/redis/node-2/data：data -v /mydata/redis/node-2/conf/redis/conf:/etc/redis/redis.conf --net redis --ip 192.169.0.12 redis:5.0.9-alpine3.11 redis-server /etc/redis/redis.conf
+
+docker run -d -p 6373:6379 -p 9373:6379 --name redis03 -v /mydata/redis/node-3/data：data -v /mydata/redis/node-3/conf/redis/conf:/etc/redis/redis.conf --net redis --ip 192.169.0.13 redis:5.0.9-alpine3.11 redis-server /etc/redis/redis.conf
+
+docker run -d -p 6374:6379 -p 9374:6379 --name redis04 -v /mydata/redis/node-4/data：data -v /mydata/redis/node-4/conf/redis/conf:/etc/redis/redis.conf --net redis --ip 192.169.0.14 redis:5.0.9-alpine3.11 redis-server /etc/redis/redis.conf
+
+docker run -d -p 6375:6379 -p 9375:6379 --name redis05 -v /mydata/redis/node-5/data：data -v /mydata/redis/node-5/conf/redis/conf:/etc/redis/redis.conf --net redis --ip 192.169.0.15 redis:5.0.9-alpine3.11 redis-server /etc/redis/redis.conf
+
+docker run -d -p 6376:6379 -p 9376:6379 --name redis06 -v /mydata/redis/node-6/data：data -v /mydata/redis/node-6/conf/redis/conf:/etc/redis/redis.conf --net redis --ip 192.169.0.16 redis:5.0.9-alpine3.11 redis-server /etc/redis/redis.conf
+
+redis-cli --cluster create 192.169.0.11:6379 192.169.0.12:6379 192.169.0.13:6379 192.169.0.14:6379 192.169.0.15:6379 192.169.0.16:6379 --cluster-replicas 1
+
+
+
+
+[root@hoyin conf]# for port in $(seq 1 6); \
+> do \
+> mkdir -p /mydata/redis/node-${port}/conf
+> touch /mydata/redis/node-${port}/conf/redis.conf
+> cat << EOF >/mydata/redis/node-${port}/conf/redis.conf
+> port 6379
+> bind 0.0.0.0
+> cluster-enabled yes
+> cluster-config-file nodes.conf
+> cluster-node-timeout 5000
+> cluster-announce-ip 192.169.0.1${port}
+> cluster-announce-port 6379
+> cluster-announce-bus-port 16379
+> appendonly yes
+> EOF
+> done
+[root@hoyin conf]# for port in $(seq 1 6); \
+> do \
+> docker run -p 637${port}:6379 -p 1637${port}:16379 --name redis0${port} -v /mydata/redis/node-${port}/data:/data -v /mydata/redis/node-${port}/conf/redis.conf:/etc/redis/redis.conf -d --net redis --ip 192.169.0.1${port} redis:5.0.9-alpine3.11 redis-server /etc/redis/redis.conf
+> done
+3a499e7b402396938927419535be81ede045e25e9c1d97bb74ba47b5a9ff03a8
+63d72f07d16edb3f84e44b0ca335e7eedda27fe31179153cba1b584cd99689ad
+31b2e36b5bcd67b75e09bf375440598f26bcdff2c86e309c63870aa7a268b58b
+34b09b62a1aa5023564d2af5f8fcd4067fa389adf6f09b82e76a67a2ea331e90
+8757b9950192caf2b8c370ac58298277a0cbec3bd66757743bb9fb0ef84804ea
+6001ceca4e26b028856e598290a10e57c32dfde96d7cc0a3c41f909c9abdca71
+[root@hoyin conf]# docker exec -it redis01 /bin/sh
+/data # 
+/data # 
+/data # redis-cli --cluster create 192.169.0.11:6379 192.169.0.12:6379 192.169.0.13:6379 192.169.0.14:6379 192.169.0.15:6379 192.169.
+0.16:6379 --cluster-replicas 1
+>>> Performing hash slots allocation on 6 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+Adding replica 192.169.0.15:6379 to 192.169.0.11:6379
+Adding replica 192.169.0.16:6379 to 192.169.0.12:6379
+Adding replica 192.169.0.14:6379 to 192.169.0.13:6379
+M: f345e1c37262b4b0ae7b6fdef947676adc2deace 192.169.0.11:6379
+   slots:[0-5460] (5461 slots) master
+M: 52b778473a0c0ae59bf4b7a87ff2a3334072bf8c 192.169.0.12:6379
+   slots:[5461-10922] (5462 slots) master
+M: cc5b1f4f11732a6b1d408a074d0b7f224ccafb9c 192.169.0.13:6379
+   slots:[10923-16383] (5461 slots) master
+S: f4876241b5f7f4ae8b2b15f1d8b6e2043877b194 192.169.0.14:6379
+   replicates cc5b1f4f11732a6b1d408a074d0b7f224ccafb9c
+S: d1bf8c446cc8594f5fdc174ae98b2867b41ccd10 192.169.0.15:6379
+   replicates f345e1c37262b4b0ae7b6fdef947676adc2deace
+S: 3e4b623d2dac8f0d02f614f23fac1789cace8022 192.169.0.16:6379
+   replicates 52b778473a0c0ae59bf4b7a87ff2a3334072bf8c
+Can I set the above configuration? (type 'yes' to accept): yes
+>>> Nodes configuration updated
+>>> Assign a different config epoch to each node
+>>> Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+...
+>>> Performing Cluster Check (using node 192.169.0.11:6379)
+M: f345e1c37262b4b0ae7b6fdef947676adc2deace 192.169.0.11:6379
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+S: f4876241b5f7f4ae8b2b15f1d8b6e2043877b194 192.169.0.14:6379
+   slots: (0 slots) slave
+   replicates cc5b1f4f11732a6b1d408a074d0b7f224ccafb9c
+S: d1bf8c446cc8594f5fdc174ae98b2867b41ccd10 192.169.0.15:6379
+   slots: (0 slots) slave
+   replicates f345e1c37262b4b0ae7b6fdef947676adc2deace
+S: 3e4b623d2dac8f0d02f614f23fac1789cace8022 192.169.0.16:6379
+   slots: (0 slots) slave
+   replicates 52b778473a0c0ae59bf4b7a87ff2a3334072bf8c
+M: 52b778473a0c0ae59bf4b7a87ff2a3334072bf8c 192.169.0.12:6379
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+M: cc5b1f4f11732a6b1d408a074d0b7f224ccafb9c 192.169.0.13:6379
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
+
+
+/data # redis-cli -c
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> set a b
+192.169.0.13:6379> cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:6
+cluster_size:3
+cluster_current_epoch:6
+cluster_my_epoch:3
+cluster_stats_messages_ping_sent:845
+cluster_stats_messages_pong_sent:890
+cluster_stats_messages_meet_sent:3
+cluster_stats_messages_sent:1738
+cluster_stats_messages_ping_received:888
+cluster_stats_messages_pong_received:848
+cluster_stats_messages_meet_received:2
+cluster_stats_messages_received:1738
+192.169.0.13:6379> cluster nodes
+52b778473a0c0ae59bf4b7a87ff2a3334072bf8c 192.169.0.12:6379@16379 master - 0 1624607469617 2 connected 5461-10922
+3e4b623d2dac8f0d02f614f23fac1789cace8022 192.169.0.16:6379@16379 slave 52b778473a0c0ae59bf4b7a87ff2a3334072bf8c 0 1624607468613 6 connected
+f4876241b5f7f4ae8b2b15f1d8b6e2043877b194 192.169.0.14:6379@16379 slave cc5b1f4f11732a6b1d408a074d0b7f224ccafb9c 0 1624607469000 4 connected
+cc5b1f4f11732a6b1d408a074d0b7f224ccafb9c 192.169.0.13:6379@16379 myself,master - 0 1624607467000 3 connected 10923-16383
+f345e1c37262b4b0ae7b6fdef947676adc2deace 192.169.0.11:6379@16379 master - 0 1624607469000 1 connected 0-5460
+d1bf8c446cc8594f5fdc174ae98b2867b41ccd10 192.169.0.15:6379@16379 slave f345e1c37262b4b0ae7b6fdef947676adc2deace 0 1624607468512 5 connected
+
+#关闭 redis03
+192.169.0.14:6379> cluster nodes
+f345e1c37262b4b0ae7b6fdef947676adc2deace 192.169.0.11:6379@16379 master - 0 1624607671552 1 connected 0-5460
+cc5b1f4f11732a6b1d408a074d0b7f224ccafb9c 192.169.0.13:6379@16379 master,fail - 1624607631340 1624607630535 3 connected
+f4876241b5f7f4ae8b2b15f1d8b6e2043877b194 192.169.0.14:6379@16379 myself,master - 0 1624607670000 7 connected 10923-16383
+d1bf8c446cc8594f5fdc174ae98b2867b41ccd10 192.169.0.15:6379@16379 slave f345e1c37262b4b0ae7b6fdef947676adc2deace 0 1624607671000 5 connected
+52b778473a0c0ae59bf4b7a87ff2a3334072bf8c 192.169.0.12:6379@16379 master - 0 1624607671552 2 connected 5461-10922
+3e4b623d2dac8f0d02f614f23fac1789cace8022 192.169.0.16:6379@16379 slave 52b778473a0c0ae59bf4b7a87ff2a3334072bf8c 0 1624607671952 6 connected
+192.169.0.14:6379> cluster nodes
+f345e1c37262b4b0ae7b6fdef947676adc2deace 192.169.0.11:6379@16379 master - 0 1624607710239 1 connected 0-5460
+cc5b1f4f11732a6b1d408a074d0b7f224ccafb9c 192.169.0.13:6379@16379 slave f4876241b5f7f4ae8b2b15f1d8b6e2043877b194 0 1624607709233 7 connected
+f4876241b5f7f4ae8b2b15f1d8b6e2043877b194 192.169.0.14:6379@16379 myself,master - 0 1624607709000 7 connected 10923-16383
+d1bf8c446cc8594f5fdc174ae98b2867b41ccd10 192.169.0.15:6379@16379 slave f345e1c37262b4b0ae7b6fdef947676adc2deace 0 1624607709000 5 connected
+52b778473a0c0ae59bf4b7a87ff2a3334072bf8c 192.169.0.12:6379@16379 master - 0 1624607709000 2 connected 5461-10922
+3e4b623d2dac8f0d02f614f23fac1789cace8022 192.169.0.16:6379@16379 slave 52b778473a0c0ae59bf4b7a87ff2a3334072bf8c 0 1624607710038 6 connected
+
+
+```
+
+
+
+# Docker compose
+
+## 安装 docker-compose
+
+```shell
+[root@hoyin ~]# curl -L https://get.daocloud.io/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m`  -o /usr/local/bin/docker-compose
+curl -l https : //get.daocloud.io/docker/compose/releases /download/1. 25 . 5/docker-compose-'uname -s ' -uname -mT > /usr/loca1/bin/docker-compose
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   423  100   423    0     0    100      0  0:00:04  0:00:04 --:--:--   100
+100 16.7M  100 16.7M    0     0  3408k      0  0:00:05  0:00:05 --:--:-- 5127k
+
+[root@hoyin bin]# sudo chmod +x /usr/local/bin/docker-compose #授权
+[root@hoyin bin]# docker-compose version
+docker-compose version 1.25.5, build 8a1c60f6
+docker-py version: 4.1.0
+CPython version: 3.7.5
+OpenSSL version: OpenSSL 1.1.0l  10 Sep 2019
+
+
+
+import time
+
+import redis
+from flask import Flask
+
+app = Flask(__name__)
+cache = redis.Redis(host='redis', port=6379)
+
+def get_hit_count():
+    retries = 5
+    while True:
+        try:
+            return cache.incr('hits')
+        except redis.exceptions.ConnectionError as exc:
+            if retries == 0:
+                raise exc
+            retries -= 1
+            time.sleep(0.5)
+
+@app.route('/')
+def hello():
+    count = get_hit_count()
+    return 'Hello World! I have been seen {} times.\n'.format(count)
+
+
+```
+
+# yaml
+
+
+
+```shell
+version: ''
+services:
+	服务1：
+	服务2：
+# 其他配置
+
+
+```
 
