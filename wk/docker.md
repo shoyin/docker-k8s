@@ -1,10 +1,15 @@
+---
+
+typora-copy-images-to: ./images
+---
+
 # Docker
 
 DockerHub:	https://hub.docker.com/
 
 帮助文档地址：https://docs.docker.com/
 
-![image-20210621165559685](/image-20210621165559685.png)
+![image-20210621165559685](images/image-20210621165559685.png)
 
 # 卸载旧版本
 
@@ -79,7 +84,7 @@ docker version
 docker run hello-world
 ```
 
-![image-20210616111258977](/image-20210616111258977.png)
+![image-20210616111258977](images/image-20210616111258977-1624853463302.png)
 
 
 
@@ -116,7 +121,7 @@ rm -rf /var/lib/containerd
 
 镜像加速器
 
-![image-20210621115929437](/image-20210621115929437.png)
+![image-20210621115929437](images/image-20210621115929437-1624853473249.png)
 
 
 
@@ -143,7 +148,7 @@ sudo systemctl restart docker
 
 # docker run 
 
-![image-20210621120901286](/image-20210621120901286.png)
+![image-20210621120901286](images/image-20210621120901286-1624853478247.png)
 
 
 
@@ -159,7 +164,7 @@ Docker 是一个Client-Server 结构的系统，Docker的守护进程运行再�
 
 DockerServer 接收到Docker-Client的指令，就会执行这个命令！
 
-![image-20210621121719922](/image-20210621121719922.png)
+![image-20210621121719922](images/image-20210621121719922-1624853483977.png)
 
 ### Docker 为啥比VM快
 
@@ -173,7 +178,7 @@ DockerServer 接收到Docker-Client的指令，就会执行这个命令！
 
 Docker不需要像虚拟机一样重新加载一个操作系统的内核，避免引导。而Docker利用的是宿主机的操纵系统。省略了这个复杂的过程，秒级！
 
-![image-20210621133748950](/image-20210621133748950.png)
+![image-20210621133748950](images/image-20210621133748950-1624853494445.png)
 
 
 
@@ -798,7 +803,7 @@ test.js
 
 ### 小结
 
-![image-20210621165559685](/image-20210621165559685.png)
+![image-20210621165559685](images/image-20210621165559685-1624853514158.png)
 
 
 
@@ -927,7 +932,7 @@ CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     
 docker run -d --name elasticsearch02 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node"-eES_3AVA_OPTS="-Xms64m -Xmx512m" elasticsearch:7.6.2
 ```
 
-![image-20210622142340309](/image-20210622142340309.png)
+![image-20210622142340309](images/image-20210622142340309-1624853525043.png)
 
 
 
@@ -958,9 +963,9 @@ Status: Downloaded newer image for portainer/portainer:latest
 
 http://ip:8088
 
-![image-20210622153312227](/image-20210622153312227.png)
+![image-20210622153312227](images/image-20210622153312227-1624853529428.png)
 
-![image-20210622153057205](/image-20210622153057205.png)
+![image-20210622153057205](images/image-20210622153057205-1624853535451.png)
 
 
 
@@ -1035,7 +1040,7 @@ docker run -it -v /home/test:/home centos10 /bin/bash
 docker inspect 容器id
 ```
 
-![image-20210622162856592](/image-20210622162856592.png)
+![image-20210622162856592](images/image-20210622162856592-1624853542291.png)
 
 
 
@@ -1627,7 +1632,7 @@ PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
        
 ```
 
-![image-20210625102805801](/image-20210625102805801.png)
+![image-20210625102805801](images/image-20210625102805801-1624853558205.png)
 
 
 
@@ -1635,7 +1640,7 @@ PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
 
 ### Docker0 与物理网卡是桥接模式
 
-![image-20210625103335995](/image-20210625103335995.png)
+![image-20210625103335995](images/image-20210625103335995-1624853563117.png)
 
 
 
