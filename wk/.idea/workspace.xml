@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7840bd06-51ca-4bc3-86f8-4d980e457a22" name="Default Changelist" comment="" />
+    <list default="true" id="7840bd06-51ca-4bc3-86f8-4d980e457a22" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/k8s/Kubernetes第1天.md" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/Kubernetes第1天.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,5 +58,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

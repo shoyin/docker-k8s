@@ -251,7 +251,7 @@ kubernetes和docker在运行中会产生大量的iptables规则，为了不让�
  selinux是linux系统下的一个安全服务，如果不关闭它，在安装集群中会产生各种各样的奇葩问题
 
 ~~~powershell
-# 编辑 /etc/selinux/config 文件，修改SELINUX的值为disabled
+# 编辑 vim /etc/selinux/config 文件，修改SELINUX的值为disabled
 # 注意修改完毕之后需要重启linux服务
 SELINUX=disabled
 ~~~
@@ -265,7 +265,7 @@ swap分区指的是虚拟内存分区，它的作用是在物理内存使用完�
 但是如果因为某些原因确实不能关闭swap分区，就需要在集群安装过程中通过明确的参数进行配置说明
 
 ~~~powershell
-# 编辑分区配置文件/etc/fstab，注释掉swap分区一行
+# 编辑分区配置文件vim /etc/fstab，注释掉swap分区一行
 # 注意修改完毕之后需要重启linux服务
  UUID=455cc753-7a60-4c17-a424-7741728c44a1 /boot    xfs     defaults        0 0
  /dev/mapper/centos-home /home                      xfs     defaults        0 0
@@ -276,7 +276,7 @@ swap分区指的是虚拟内存分区，它的作用是在物理内存使用完�
 
 ~~~powershell
 # 修改linux的内核参数，添加网桥过滤和地址转发功能
-# 编辑/etc/sysctl.d/kubernetes.conf文件，添加如下配置:
+# 编辑v/etc/sysctl.d/kubernetes.conf文件，添加如下配置:
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
@@ -364,7 +364,7 @@ EOF
 
 ~~~powershell
 # 由于kubernetes的镜像源在国外，速度比较慢，这里切换成国内的镜像源
-# 编辑/etc/yum.repos.d/kubernetes.repo，添加下面的配置 
+# 编辑vim /etc/yum.repos.d/kubernetes.repo，添加下面的配置 
 [kubernetes]
 name=Kubernetes
 baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
@@ -378,7 +378,7 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
 [root@master ~]# yum install --setopt=obsoletes=0 kubeadm-1.17.4-0 kubelet-1.17.4-0 kubectl-1.17.4-0 -y
 
 # 配置kubelet的cgroup
-# 编辑/etc/sysconfig/kubelet，添加下面的配置
+# 编辑vim /etc/sysconfig/kubelet，添加下面的配置
 KUBELET_CGROUP_ARGS="--cgroup-driver=systemd"
 KUBE_PROXY_MODE="ipvs"
 
@@ -416,7 +416,6 @@ done
 下面开始对集群进行初始化，并将node节点加入到集群中
 
 > 下面的操作只需要在`master`节点上执行即可
->
 
 ~~~powershell
 # 创建集群
@@ -424,7 +423,7 @@ done
 	--kubernetes-version=v1.17.4 \
     --pod-network-cidr=10.244.0.0/16 \
     --service-cidr=10.96.0.0/12 \
-    --apiserver-advertise-address=192.168.109.100
+    --apiserver-advertise-address=192.168.107.200
 
 # 创建必要文件
 [root@master ~]# mkdir -p $HOME/.kube
@@ -433,7 +432,6 @@ done
 ~~~
 
 > 下面的操作只需要在`node`节点上执行即可
->
 
 ~~~powershell
 # 将node节点加入集群
@@ -455,16 +453,24 @@ node2    NotReady   <none>   19s     v1.17.4
 kubernetes支持多种网络插件，比如flannel、calico、canal等等，任选一种使用即可，本次选择flannel
 
 > 下面操作依旧只在`master`节点执行即可，插件使用的是DaemonSet的控制器，它会在每个节点上都运行
->
 
 ~~~powershell
 # 获取fannel的配置文件
 [root@master ~]# wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
-# 修改文件中quay.io仓库为quay-mirror.qiniu.com
+# 修改文件中quay.io仓库为quay-mirror.qiniu.com (可以不替换)
 
+# 百度网盘k8s 
+链接: https://pan.baidu.com/s/1zqEEk8ufOD9w5ajcrsQgOw 提取码: ru2w 复制这段内容后打开百度网盘手机App，操作更方便哦
 # 使用配置文件启动fannel
 [root@master ~]# kubectl apply -f kube-flannel.yml
+
+kubeadm token create --print-join-command
+# 生成一个永不过期的token
+kubeadm token create --ttl 0 --print-join-command
+
+• 查看部署CNI网络插件进度：
+kubectl get pods -n kube-system
 
 # 稍等片刻，再次查看集群节点的状态
 [root@master ~]# kubectl get nodes
@@ -475,6 +481,14 @@ node2    Ready    <none>   8m50s   v1.17.4
 ~~~
 
 至此，kubernetes的集群环境搭建完成
+
+- 默认的token有效期为24小时，当过期之后，该token就不能用了，这时可以使用如下的命令创建token：
+
+
+
+```
+kubeadm token create --print-join-command
+```
 
 ## 服务部署
 
@@ -918,7 +932,7 @@ NAME                   READY   STATUS    RESTARTS   AGE
 pod-864f9875b9-pcw7x   1/1     Running   0          21s
 
 # 删除指定的pod
-[root@master ~]# kubectl delete pod pod-864f9875b9-pcw7x
+[root@master ~]# kubectl delete pod pod-864f9875b9-pcw7x -n dev
 pod "pod-864f9875b9-pcw7x" deleted
 
 # 删除指定的namespace
