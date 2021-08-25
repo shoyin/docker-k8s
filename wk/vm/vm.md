@@ -1,4 +1,14 @@
+虚拟机选择桥接模式
+
+安装系统选择以太网分配
+
+
+
 ```apache
+
+
+
+
 BOOTPROTO=static        #开机协议，有dhcp及static；
 ONBOOT=yes              #设置为开机启动；
 DNS1=114.114.114.114    #这个是国内的DNS地址，是固定的；
